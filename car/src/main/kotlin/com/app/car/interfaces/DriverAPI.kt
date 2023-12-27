@@ -2,7 +2,6 @@ package com.app.car.interfaces
 
 import com.app.car.domain.Driver
 import com.app.car.domain.DriverRepository
-import com.app.car.domain.PatchDriver
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.stereotype.Service
@@ -16,25 +15,26 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.server.ResponseStatusException
+import java.time.LocalDate
 
 @Service
 @RestController
-@RequestMapping(produces = [MediaType.APPLICATION_JSON_VALUE])
+@RequestMapping(path = ["/drivers"], produces = [MediaType.APPLICATION_JSON_VALUE])
 class DriverAPI(
     val driverRepository: DriverRepository
 ) {
 
-    @GetMapping("/drivers")
+    @GetMapping
     fun listDrivers() = driverRepository.findAll()
 
-    @GetMapping("/drivers/{id}")
+    @GetMapping("/{id}")
     fun findDriver(@PathVariable("id") id: Long) = driverRepository.findById(id)
                                                     .orElseThrow { ResponseStatusException(HttpStatus.NOT_FOUND) }
 
-    @PostMapping("/drivers")
+    @PostMapping
     fun createDriver(@RequestBody driver: Driver) : Driver = driverRepository.save(driver)
 
-    @PutMapping("/drivers/{id}")
+    @PutMapping("/{id}")
     fun fullUpdateDriver(@PathVariable("id") id: Long, @RequestBody driver: Driver) : Driver {
         val foundDriver = findDriver(id)
         val copyDriver = foundDriver.copy(
@@ -44,7 +44,7 @@ class DriverAPI(
         return driverRepository.save(copyDriver)
     }
 
-    @PatchMapping("/drivers/{id}")
+    @PatchMapping("/{id}")
     fun incrementalUpdateDriver(@PathVariable("id") id: Long, @RequestBody driver: PatchDriver) : Driver {
         val foundDriver = findDriver(id)
         val copyDriver = foundDriver.copy(
@@ -54,6 +54,12 @@ class DriverAPI(
         return driverRepository.save(copyDriver)
     }
 
-    @DeleteMapping("/drivers/{id}")
+    @DeleteMapping("/{id}")
     fun deleteDriver(@PathVariable("id") id: Long) = driverRepository.delete(findDriver(id))
 }
+
+data class PatchDriver(
+
+    val name: String?,
+    val birthDate: LocalDate?
+)

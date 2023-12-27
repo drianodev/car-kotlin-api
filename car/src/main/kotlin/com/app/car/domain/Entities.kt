@@ -3,6 +3,7 @@ package com.app.car.domain
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.Id
+import jakarta.persistence.ManyToOne
 import java.time.LocalDate
 
 @Entity
@@ -15,8 +16,24 @@ data class Driver(
     val birthDate: LocalDate
 )
 
-data class PatchDriver(
+@Entity
+data class Passenger(
 
-    val name: String?,
-    val birthDate: LocalDate?
+    @Id
+    @GeneratedValue
+    var id: Long? = null,
+    val name: String
+)
+
+@Entity
+data class TravelRequest(
+
+    @Id
+    @GeneratedValue
+    var id: Long? = null,
+
+    @ManyToOne
+    val passenger: Passenger,
+    val origin: String,
+    val destination: String
 )
