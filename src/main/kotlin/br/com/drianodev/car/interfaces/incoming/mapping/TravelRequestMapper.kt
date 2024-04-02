@@ -1,10 +1,10 @@
-package br.com.drianodev.car.mapping
+package br.com.drianodev.car.interfaces.incoming.mapping
 
 import br.com.drianodev.car.domain.PassengerRepository
 import br.com.drianodev.car.domain.TravelRequest
 import br.com.drianodev.car.domain.TravelRequestInput
 import br.com.drianodev.car.domain.TravelRequestOutput
-import br.com.drianodev.car.interfaces.PassengerAPI
+import br.com.drianodev.car.interfaces.incoming.PassengerAPI
 import org.springframework.hateoas.EntityModel
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder
 import org.springframework.http.HttpStatus
@@ -38,7 +38,8 @@ class TravelRequestMapper(
     fun buildOutputModel(travelRequest: TravelRequest,
                          output: TravelRequestOutput): EntityModel<TravelRequestOutput> {
         val passengerLink = WebMvcLinkBuilder
-            .linkTo(PassengerAPI::class)
+            .linkTo(PassengerAPI::class.java)
+            .slash(travelRequest.passenger.id)
             .withRel("passenger")
             .withTitle(travelRequest.passenger.name)
 

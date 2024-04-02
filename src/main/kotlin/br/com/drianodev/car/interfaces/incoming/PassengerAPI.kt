@@ -1,4 +1,4 @@
-package br.com.drianodev.car.interfaces
+package br.com.drianodev.car.interfaces.incoming
 
 import br.com.drianodev.car.domain.Passenger
 import br.com.drianodev.car.domain.PassengerRepository

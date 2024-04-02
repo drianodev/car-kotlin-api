@@ -1,9 +1,9 @@
-package br.com.drianodev.car.interfaces
+package br.com.drianodev.car.interfaces.incoming
 
 import br.com.drianodev.car.domain.TravelRequestInput
 import br.com.drianodev.car.domain.TravelRequestOutput
 import br.com.drianodev.car.service.TravelService
-import br.com.drianodev.car.mapping.TravelRequestMapper
+import br.com.drianodev.car.interfaces.incoming.mapping.TravelRequestMapper
 import org.springframework.hateoas.EntityModel
 import org.springframework.http.MediaType
 import org.springframework.stereotype.Service
