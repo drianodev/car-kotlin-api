@@ -45,4 +45,6 @@ class TravelRequestMapper(
 
         return EntityModel.of(output, passengerLink)
     }
+
+    fun buildOutputModel(requests: List<TravelRequest>) = requests.map { buildOutputModel(it, map(it)) }
 }
